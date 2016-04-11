@@ -123,7 +123,7 @@ class JsTree extends InputWidget
             'plugins' => $this->plugins,
             'types' => $this->types
         ];
-        $defaults = Json::encode($config);
+        $defaults = Json::encode(array_filter($config));
 
         $inputId = (!$this->hasModel()) ? $this->options['id'] : Html::getInputId($this->model, $this->attribute);
 

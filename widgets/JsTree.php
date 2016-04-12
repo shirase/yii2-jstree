@@ -83,6 +83,8 @@ class JsTree extends InputWidget
         'default' => [],
     ];
 
+    public $bind = [];
+
     /**
      * @inheritdoc
      */
@@ -136,9 +138,18 @@ class JsTree extends InputWidget
         .bind("changed.jstree", function(e, data, x){
                 $("#{$inputId}").val(JSON.stringify(data.selected));
         })
+        {$this->generateBind()}
         .jstree({$defaults});
 })(window.jQuery, window, document);
 SCRIPT;
         $view->registerJs($js);
+    }
+
+    private function generateBind() {
+        $res = '';
+        foreach ($this->bind as $event=>$fn) {
+            $res .= '.bind("'.$event.'", '.$fn.')'."\n";
+        }
+        return $res;
     }
 }
